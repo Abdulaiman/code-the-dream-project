@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.parent-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-left: 2rem;
+  color: rgb(56, 55, 55);
+}
+.home {
+  background-color: rgb(247, 247, 247);
+}
+.person-container {
+  width: 30rem;
+  min-height: 20rem;
+  border: 1px solid grey;
+  border-radius: 2rem;
+  background-color: #fff;
+}
+
+.person-name {
+  font-size: 3rem;
+  text-align: center;
+}
+.person-description {
+  text-align: center;
+  font-size: 1.25rem;
+}
+.properties-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+.info {
+  font-size: 1.1rem;
+}
+.movie-btn {
+  text-decoration: none;
+  background-color: blue;
+  color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.nav {
+  background-color: blanchedalmond;
+  margin-bottom: 2rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-items {
+  font-size: 2rem;
+  text-decoration: none;
+  margin-right: 1.5rem;
+  color: rgb(103, 101, 101);
+}
