@@ -37,13 +37,9 @@
 .info {
   font-size: 1.1rem;
 }
-.movie-btn {
-  text-decoration: none;
-  background-color: blue;
-  color: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-top: 1rem;
+.info-span {
+  font-weight: bolder;
+  font-size: larger;
 }
 .nav {
   background-color: blanchedalmond;
@@ -58,4 +54,27 @@
   text-decoration: none;
   margin-right: 1.5rem;
   color: rgb(103, 101, 101);
+}
+.film-container {
+  padding-left: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+.film-title {
+  padding-bottom: 0.5rem;
+}
+
+.movie-container {
+  width: 70vw;
+  min-height: 80vh;
+  margin: auto auto;
+  margin-top: 3rem;
+  border: 1px solid grey;
+  border-radius: 2rem;
+  /* background-color: rgb(155, 153, 153); */
+}
+.char-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 5rem;
 }
