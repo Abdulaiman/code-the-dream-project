@@ -1,4 +1,6 @@
 const fimlContainer = document.querySelector(".film-parent-container");
+const starshipContainer = document.querySelector(".starship-parent-container");
+const vehicleContainer = document.querySelector(".vehicle-parent-container");
 const hello = document.querySelector(".parent-container");
 let films = [];
 const getData = async () => {
@@ -83,54 +85,72 @@ displayPeopleData();
 document.addEventListener("click", async function (e) {
   e.preventDefault();
   const url = e.target.dataset.url;
-  const filmData = await fetchData(url);
-  localStorage.setItem("film", JSON.stringify(filmData));
-  document.location.href = "film.html";
+  if (e.target.className === "film-list") {
+    const filmData = await fetchData(url?.replace("dev", "tech"));
+    localStorage.setItem("film", JSON.stringify(filmData));
+    document.location.href = "film.html";
+  } else if (e.target.className === "vehicle-list") {
+    const vehicleData = await fetchData(url?.replace("dev", "tech"));
+    localStorage.setItem("vehicle", JSON.stringify(vehicleData));
+    document.location.href = "vehicle.html";
+  } else if (e.target.className === "star-list") {
+    const starshipData = await fetchData(url?.replace("dev", "tech"));
+    localStorage.setItem("starship", JSON.stringify(starshipData));
+    document.location.href = "starship.html";
+  }
 });
 const film = JSON.parse(localStorage.getItem("film"));
-console.log(film);
+
 const showFilm = async () => {
   if (fimlContainer) {
-    const charArr = film.characters.map(async (char) => {
-      return await fetchData(char);
-    });
-    const starships = film.starships.map(async (star) => {
-      return await fetchData(star);
-    });
-    const vehicles = film.vehicles.map(async (veh) => {
-      return await fetchData(veh);
-    });
+    console.log(film);
+    const charArr = film.result.properties.characters
+      ?.splice(0, 11)
+      .map(async (char) => {
+        return await fetchData(char?.replace("dev", "tech"));
+      });
+    const starships = film.result.properties.starships
+      ?.splice(0, 11)
+      .map(async (star) => {
+        return await fetchData(star?.replace("dev", "tech"));
+      });
+    const vehicles = film.result.properties.vehicles
+      ?.splice(0, 11)
+      .map(async (veh) => {
+        return await fetchData(veh?.replace("dev", "tech"));
+      });
     const char = await Promise.all(charArr);
     const veh = await Promise.all(vehicles);
     const star = await Promise.all(starships);
-    console.log(char);
     const html = `
   <div class="movie-container">
   <div>
-    <h3 class="person-name">${film.title}</h3>
+    <h3 class="person-name">${film.result.properties.title}</h3>
 
   </div>
   <div class="properties-container">
     <p class="info"><span class='info-span'>Director:</span> ${
-      film.director
+      film.result.properties.director
     }</p>
     <p class="info"><span class='info-span'>Release_Date:</span> ${
-      film.release_date
+      film.result.properties.release_date
     }</p>
   </div>
   <div class="properties-container">
-    <p class="info"><span class='info-span'>Producers:</span> ${film.producer.replaceAll(
+    <p class="info"><span class='info-span'>Producers:</span> ${film.result.properties.producer.replaceAll(
       ",",
       " and"
     )}</p>
-    <p class="info"><span class='info-span'>Url:</span> ${film.url}</p>
+    <p class="info"><span class='info-span'>Url:</span> ${
+      film.result.properties.url
+    }</p>
   </div>
   <div class="film-container char-container">
   <div>
   <h2 class="film-title">Characters</h2>
   <ul>
   ${char.map((char) => {
-    return `<li  class="film-list">${char.name}</li>`;
+    return `<li  class="film-list" data-url=${char.result.properties.url}>${char.result.properties.name}</li>`;
   })}
   </ul>
   </div>
@@ -138,7 +158,7 @@ const showFilm = async () => {
   <h2 class="film-title">Vehicles</h2>
   <ul>
   ${veh.map((vehicle) => {
-    return `<a href="./film.html"> <li  class="film-list">${vehicle.name}</li></a>`;
+    return `<a href="./vehicle.html"> <li  class="vehicle-list" data-url=${vehicle.result.properties.url}>${vehicle.result.properties.name}</li></a>`;
   })}
   </ul>
   </div>
@@ -146,7 +166,7 @@ const showFilm = async () => {
   <h2 class="film-title">Starships</h2>
   <ul>
   ${star.map((star) => {
-    return `<a href="./film.html"> <li  class="film-list">${star.name}</li></a>`;
+    return `<a href="./starship.html"> <li  class="star-list" data-url=${star.result.properties.url}>${star.result.properties.name}</li></a>`;
   })}
   </ul>
   </div>
@@ -162,3 +182,137 @@ const showFilm = async () => {
   }
 };
 showFilm();
+const showVehicle = async () => {
+  if (vehicleContainer) {
+    const vehicle = JSON.parse(localStorage.getItem("vehicle"));
+
+    const films = vehicle.result.properties?.films
+      ?.splice(0, 11)
+      .map(async (char) => {
+        return await fetchData(char?.replace("dev", "tech"));
+      });
+    const starships = vehicle.result?.properties?.pilots
+      ?.splice(0, 11)
+      .map(async (star) => {
+        return await fetchData(star?.replace("dev", "tech"));
+      });
+
+    const char = await Promise.all(films);
+
+    const star = await Promise.all(starships);
+
+    const html = `
+      <div class="movie-container">
+      <div>
+        <h3 class="person-name">${vehicle.result.properties.name}</h3>
+
+      </div>
+      <div class="properties-container">
+        <p class="info"><span class='info-span'>Manufacturer:</span> ${
+          vehicle.result.properties.manufacturer
+        }</p>
+        <p class="info"><span class='info-span'>Model:</span> ${
+          vehicle.result.properties.model
+        }</p>
+      </div>
+      <div class="properties-container">
+        <p class="info"><span class='info-span'>Max_Atmosphering_Speed
+        :</span> ${vehicle.result.properties.max_atmosphering_speed}</p>
+        <p class="info"><span class='info-span'>Url:</span> ${
+          vehicle.result.properties.url
+        }</p>
+      </div>
+      <div class="film-container char-container">
+      <div>
+      <h2 class="film-title">Characters</h2>
+      <ul>
+   ${
+     char.length === 0
+       ? `<li  class="film-list">No Characters</li>`
+       : char.map((char) => {
+           return `<li  class="film-list" data-url=${char.result.properties.url}>${char.result.properties.name}</li>`;
+         })
+   }
+      </ul>
+      </div>
+ 
+      <div>
+      <h2 class="film-title">Pilots</h2>
+      <ul>
+      ${
+        star.length === 0
+          ? `<li  class="film-list">No Pilots</li>`
+          : star.map((star) => {
+              return `<li  class="star-list" data-url=${star.result.properties.url}>${star.result.properties.name}</li>`;
+            })
+      }
+      </ul>
+      </div>
+
+    </div>
+      </div>
+
+      </div>
+      `;
+
+    vehicleContainer ? (vehicleContainer.innerHTML += html) : "";
+  }
+};
+showVehicle();
+const showStarships = async () => {
+  if (starshipContainer) {
+    const starship = JSON.parse(localStorage.getItem("starship"));
+    const starships = starship.result?.properties?.pilots
+      ?.splice(0, 11)
+      .map(async (star) => {
+        return await fetchData(star?.replace("dev", "tech"));
+      });
+
+    const star = await Promise.all(starships);
+
+    const html = `
+      <div class="movie-container">
+      <div>
+        <h3 class="person-name">${starship.result.properties.name}</h3>
+
+      </div>
+      <div class="properties-container">
+        <p class="info"><span class='info-span'>Manufacturer:</span> ${
+          starship.result.properties.manufacturer
+        }</p>
+        <p class="info"><span class='info-span'>Model:</span> ${
+          starship.result.properties.model
+        }</p>
+      </div>
+      <div class="properties-container">
+        <p class="info"><span class='info-span'>Max_Atmosphering_Speed
+        :</span> ${starship.result.properties.max_atmosphering_speed}</p>
+        <p class="info"><span class='info-span'>Url:</span> ${
+          starship.result.properties.url
+        }</p>
+      </div>
+     
+      <div class="film-container char-container">
+ 
+      <div>
+      <h2 class="film-title">Pilots</h2>
+      <ul>
+      ${
+        star.length === 0
+          ? `<li  class="film-list">No Pilots</li>`
+          : star.map((star) => {
+              return `<li  class="star-list" data-url=${star.result.properties.url}>${star.result.properties.name}</li>`;
+            })
+      }
+      </ul>
+      </div>
+
+    </div>
+      </div>
+      </div>
+      `;
+
+    starshipContainer ? (starshipContainer.innerHTML += html) : "";
+  }
+};
+showStarships();
