@@ -1,8 +1,19 @@
 const fimlContainer = document.querySelector(".film-parent-container");
 const starshipContainer = document.querySelector(".starship-parent-container");
 const vehicleContainer = document.querySelector(".vehicle-parent-container");
-const hello = document.querySelector(".parent-container");
-let films = [];
+const home = document.querySelector(".parent-container");
+home
+  ? (home.innerHTML = `<div class='loader-container'><div class="loader"></div></div>`)
+  : "";
+fimlContainer
+  ? (fimlContainer.innerHTML = `<div class='loader-container'><div class="loader"></div></div>`)
+  : "";
+vehicleContainer
+  ? (vehicleContainer.innerHTML = `<div class='loader-container'><div class="loader"></div></div>`)
+  : "";
+starshipContainer
+  ? (starshipContainer.innerHTML = `<div class='loader-container'><div class="loader"></div></div>`)
+  : "";
 const getData = async () => {
   const data = await fetch("https://swapi.dev/api/people", {
     method: "GET",
@@ -10,10 +21,19 @@ const getData = async () => {
   return await data.json();
 };
 const fetchData = async (url) => {
-  const data = await fetch(url, {
-    method: "GET",
-  });
-  return await data.json();
+  try {
+    const data = await fetch(url, {
+      method: "GET",
+    });
+    return await data.json();
+  } catch (err) {
+    if (err.message.startsWith("Unexpected token")) {
+      document.location.href = "index.html";
+      alert(
+        "maximum call to the api has been reached please wait for 2 mins before retrying"
+      );
+    }
+  }
 };
 
 const getPeopleUrls = async () => {
@@ -74,8 +94,10 @@ ${films.map((film) => {
    </div>
    </div>
    `;
-
-    hello ? (hello.innerHTML += html) : "";
+    home
+      ? document.querySelector(".loader-container").classList.add("hide")
+      : "";
+    home ? (home.innerHTML += html) : "";
   });
 
   return people.films;
@@ -123,6 +145,9 @@ const showFilm = async () => {
     const veh = await Promise.all(vehicles);
     const star = await Promise.all(starships);
     const html = `
+    <nav class="nav">  
+    <h1 class="nav-items">Movie</h1>
+       </nav> 
   <div class="movie-container">
   <div>
     <h3 class="person-name">${film.result.properties.title}</h3>
@@ -177,7 +202,9 @@ const showFilm = async () => {
 
   </div>
   `;
-
+    fimlContainer
+      ? document.querySelector(".loader-container").classList.add("hide")
+      : "";
     fimlContainer ? (fimlContainer.innerHTML += html) : "";
   }
 };
@@ -202,7 +229,11 @@ const showVehicle = async () => {
     const star = await Promise.all(starships);
 
     const html = `
+    <nav class="nav">  
+    <h1 class="nav-items">Vehicle</h1>
+       </nav>
       <div class="movie-container">
+      
       <div>
         <h3 class="person-name">${vehicle.result.properties.name}</h3>
 
@@ -254,7 +285,9 @@ const showVehicle = async () => {
 
       </div>
       `;
-
+    vehicleContainer
+      ? document.querySelector(".loader-container").classList.add("hide")
+      : "";
     vehicleContainer ? (vehicleContainer.innerHTML += html) : "";
   }
 };
@@ -271,6 +304,9 @@ const showStarships = async () => {
     const star = await Promise.all(starships);
 
     const html = `
+    <nav class="nav">  
+    <h1 class="nav-items">Starship</h1>
+       </nav>
       <div class="movie-container">
       <div>
         <h3 class="person-name">${starship.result.properties.name}</h3>
@@ -311,7 +347,9 @@ const showStarships = async () => {
       </div>
       </div>
       `;
-
+    starshipContainer
+      ? document.querySelector(".loader-container").classList.add("hide")
+      : "";
     starshipContainer ? (starshipContainer.innerHTML += html) : "";
   }
 };
