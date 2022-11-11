@@ -1,12 +1,11 @@
 To run the app on your computer using vs code.
 
-1. check the Vs code menu bar and find the "run" button.
+1. open the vs code extension tab and install an extension with the name "Live Server (Five Server)". It allow us to run our application easily.
 
-2. hover or click on it to see the options.
+2. after installation enable the application.
 
-3. click on the "run without debugging button" and choose chrome if vs code ask for a browser.
+3. after that look at the bottom right corner of the screen, you will see a button that says "Go Live".
 
-4. if not, after clicking the "run without debugging" it will automatically open the project up in your browser.
+4. click on it and it will automatically open the application in a browser (sometimes you might need to click it again after it loads).
 
-ALTERNATIVELY, you can install the vs code extension called "live server"
-enable the live server and then right click from any folder and click on the "open with live server".
+or alternatively after enabling the extension, right click on any html file in the folder from vs code and click on the "open with five server" and it will automatically load.
