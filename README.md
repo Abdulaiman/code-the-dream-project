@@ -2,7 +2,7 @@ To run the app on your computer using vs code.
 
 1. check the Vs code menu bar and find the "run" button.
 
-2. hover or click on in to see the options.
+2. hover or click on it to see the options.
 
 3. click on the "run without debugging button" and choose chrome if vs code ask for a browser.
 
